@@ -1,6 +1,6 @@
 {
     "name": "web3-wallet-context",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "main": "index.js",
     "repository": "https://github.com/boxgames1/web3-wallet-context.git",
     "author": "Oliver Alonso <alonso.oliverio@gmail.com>",
@@ -15,10 +15,10 @@
         "@web3auth/torus-wallet-connector-plugin": "0.9.4",
         "@web3auth/wallet-connect-v1-adapter": "0.9.4",
         "@web3auth/web3auth": "0.9.4",
-        "ethers": "^5.6.2",
+        "ethers": "^6.6.0",
         "react": "^17.0.2",
         "react-dom": "17.0.2",
-        "web3": "^1.7.3"
+        "web3": "^4.0.1"
     },
     "devDependencies": {
         "@testing-library/jest-dom": "^5.16.3",

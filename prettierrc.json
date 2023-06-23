@@ -1,0 +1,8 @@
+{
+  "max_line_length": 80,
+  "tabWidth": 2,
+  "semi": true,
+  "parser": "babel",
+  "singleQuote": true,
+  "jsxSingleQuote": true
+}

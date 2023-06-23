@@ -1,6 +1,5 @@
-import { ethers } from 'ethers';
+import { ethers, parseEther } from 'ethers';
 import { IWalletProvider } from '../types';
-import { parseEther } from 'ethers/lib/utils';
 
 const DEFAULT_NFT_ABI = ['function mint(address account, uint256 tokenId) external payable'];
 
@@ -9,7 +8,7 @@ export default class EthereumProvider implements IWalletProvider {
 
     getProvider = () => {
         try {
-            return new ethers.providers.Web3Provider(this.web3Provider);
+            return new ethers.BrowserProvider(this.web3Provider);
         } catch (e) {
             console.error('Error in ethProvider:getProvider()', e);
             throw e;
@@ -33,7 +32,8 @@ export default class EthereumProvider implements IWalletProvider {
             throw new Error('ethProvider:getAddress() - web3Provider is null');
         }
         try {
-            return this.getSigner().getAddress();
+            const signer = await this.getSigner();
+            return signer.getAddress();
         } catch (e) {
             console.error('Error in ethProvider:getAddress()', e);
             throw e;
@@ -48,7 +48,8 @@ export default class EthereumProvider implements IWalletProvider {
     ): Promise<any> => {
         const provider = this.getProvider();
         try {
-            const contract = new ethers.Contract(tokenAddress, contractAbi, provider);
+            const formattedContratAbi = new ethers.Interface(JSON.stringify(contractAbi.abi));
+            const contract = new ethers.Contract(tokenAddress, formattedContratAbi, provider);
             if (typeof contract[contractFunction] !== 'function') {
                 throw new Error(
                     `ethProvider:executeContractFunction() - ${contractFunction} is not a function of the contract`
@@ -66,7 +67,12 @@ export default class EthereumProvider implements IWalletProvider {
             throw new Error('ethProvider:getBalance() - web3Provider is null');
         }
         try {
-            return parseFloat(ethers.utils.formatEther(await this.getSigner().getBalance()));
+            const provider = this.getProvider();
+            const blockTag = await provider.getBlockNumber();
+            const signer = await this.getSigner();
+            const bigIntBalance = await provider.getBalance(signer.getAddress(), blockTag);
+            const numberBalance = parseFloat(ethers.formatEther(bigIntBalance));
+            return numberBalance;
         } catch (e) {
             console.error('Error in ethProvider:getBalance()', e);
             throw e;
@@ -80,11 +86,13 @@ export default class EthereumProvider implements IWalletProvider {
         functionAbi?: ethers.ContractInterface,
         functionName?: string
     ) => {
-        const signer = this.getSigner();
+        const signer = await this.getSigner();
         try {
             const abi = functionAbi || DEFAULT_NFT_ABI;
-            const contract = new ethers.Contract(tokenAddress, abi, signer);
-            const tx = await contract[functionName || 'mint'](await signer.getAddress(), tokenId, {
+            const address = await signer.getAddress();
+            const formattedContratAbi = new ethers.Interface(JSON.stringify(abi));
+            const contract = new ethers.Contract(tokenAddress, formattedContratAbi, signer);
+            const tx = await contract[functionName || 'mint'](address, tokenId, {
                 value: parseEther(price.toString()),
             });
             return tx;
@@ -106,7 +114,7 @@ export default class EthereumProvider implements IWalletProvider {
 
     signMessage = async (message: string) => {
         try {
-            const signer = this.getSigner();
+            const signer = await this.getSigner();
             return await signer.signMessage(message);
         } catch (e) {
             console.error('Error in ethProvider:signMessage: ', e);

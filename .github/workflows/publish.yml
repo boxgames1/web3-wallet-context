@@ -17,7 +17,6 @@ jobs:
           cache: "yarn"
 
       - run: yarn
-      - run: yarn prepublishOnly
       - run: yarn prepare
       - name: Publish package on NPM 📦
         run: npm publish

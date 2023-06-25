@@ -18,6 +18,8 @@ jobs:
 
       - run: yarn
       - run: yarn prepare
+      - name: npm login
+        run: echo "//https://registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
       - name: Publish package on NPM 📦
         run: npm publish
         env:

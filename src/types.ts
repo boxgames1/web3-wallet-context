@@ -26,7 +26,7 @@ export interface WalletContextValues {
     connected: boolean;
     isLoading: boolean;
     accountAddress: string | null;
-    accountBalance: number | null;
+    accountBalance: string | number | null;
     torusEmail: string | null;
     blockExplorerUrl: string | null;
     chainConfig: chainInfo | null;
@@ -66,22 +66,22 @@ export const defaultWalletContextValue: WalletContextValues = {
 
 export interface IWeb3WalletConstructorArgs {
     chainConfig: chainInfo;
-    setConnected: Function;
-    setIsLoading: Function;
-    setAccountAddress: Function;
-    setAccountBalance: Function;
-    setTorusEmail?: Function;
+    setConnected: (isConnected: boolean) => void;
+    setIsLoading: (isLoading: boolean) => void;
+    setAccountAddress: (address: string | null) => void;
+    setAccountBalance: (balance: string | number | null) => void;
+    setTorusEmail?: (email: string | null) => void;
 }
 
 export interface IWeb3Wallet {
     walletType: IWalletTypes;
     walletInstance: any;
-    setConnected: Function;
-    setIsLoading: Function;
-    setAccountAddress: Function;
-    setAccountBalance: Function;
+    setConnected: (isConnected: boolean) => void;
+    setIsLoading: (isLoading: boolean) => void;
+    setAccountAddress: (address: string | null) => void;
+    setAccountBalance: (balance: string | number | null) => void;
+    setTorusEmail?: (email: string | null) => void;
     adapterInit: (isMetamaskMobile?: boolean) => Promise<void>;
-    setTorusEmail?: Function;
     login: () => Promise<void>;
     logout: () => Promise<void>;
     executeContractFunction: (

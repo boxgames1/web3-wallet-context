@@ -7,6 +7,7 @@ const WalletConnection = () => {
         isLoading,
         connected,
         setWallet,
+        logout,
         accountAddress,
         accountBalance,
         blockExplorerUrl,
@@ -26,23 +27,31 @@ const WalletConnection = () => {
     }
     return (
         <div>
-            <strong>Connect to</strong>
             {isLoading ? (
                 <div>Loading...</div>
             ) : connected ? (
-                <div>
+                <div className='connected'>
                     <strong>Connected</strong>
-                    <div>
+                    <div className='info'>
                         <div>Wallet address: {accountAddress}</div>
-                        <div>Account Balance: {accountBalance}</div>
-                        <div>Chain Config: {chainConfig?.displayName}</div>
+                        <div>
+                            Account Balance: {accountBalance} {chainConfig?.ticker}
+                        </div>
+                        <div>Chain name: {chainConfig?.displayName}</div>
                         <div>blockExplorerUrl: {blockExplorerUrl}</div>
                         <div>WalletType: {walletType}</div>
                     </div>
+                    <div>
+                        <button onClick={() => logout()}>Disconnect</button>
+                    </div>
                 </div>
             ) : (
-                <div className='list'>
-                    <button onClick={() => handleLogin(IWalletTypes.METAMASK)}>Metamask</button>
+                <div className='entry'>
+                    <strong>Connect to</strong>
+
+                    <div className='button-list'>
+                        <button onClick={() => handleLogin(IWalletTypes.METAMASK)}>Metamask</button>
+                    </div>
                 </div>
             )}
         </div>

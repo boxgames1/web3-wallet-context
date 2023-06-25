@@ -1,12 +1,16 @@
+import { WalletProvider } from 'web3-wallet-context';
 import './App.css';
+import { projectChainInfo } from './chains';
 import WalletConnection from './components/WalletConnection';
 
-function App() {
+const App = () => {
     return (
         <div className='App'>
-            <WalletConnection />
+            <WalletProvider chainConfig={projectChainInfo.goerli}>
+                <WalletConnection />
+            </WalletProvider>
         </div>
     );
-}
+};
 
 export default App;

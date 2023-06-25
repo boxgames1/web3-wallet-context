@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, createContext } from 'react';
+import React, { useEffect, useState, useContext, createContext } from 'react';
 import {
     chainInfo,
     defaultWalletContextValue,
@@ -30,7 +30,7 @@ export const WalletProvider = ({ chainConfig, children }: WalletProviderProps) =
     const [connected, setConnected] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [accountAddress, setAccountAddress] = useState<string | null>(null);
-    const [accountBalance, setAccountBalance] = useState<number | null>(null);
+    const [accountBalance, setAccountBalance] = useState<string | number | null>(null);
     const [torusEmail, setTorusEmail] = useState<string | null>(null);
     const [blockExplorerUrl, setBlockExplorerUrl] = useState<string | null>(null);
     const [savedWalletType, setSavedWalletType] = useLocalStorage<IWalletTypes | null>(
@@ -53,7 +53,7 @@ export const WalletProvider = ({ chainConfig, children }: WalletProviderProps) =
         }
     }, [connected, web3Wallet, walletType]);
 
-    const setWallet = async (walletType: IWalletTypes, isMetamaskMobile: boolean = false) => {
+    const setWallet = async (walletType: IWalletTypes, isMetamaskMobile = false) => {
         let walletInstance;
 
         try {

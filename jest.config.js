@@ -5,4 +5,4 @@ const customJestConfig = {
     modulePathIgnorePatterns: ['utils.ts'],
 };
 
-module.exports = createJestConfig(customJestConfig);
+module.exports = customJestConfig;

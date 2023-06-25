@@ -12,6 +12,15 @@
     pointer-events: none;
 }
 
+.connected,
+.list,
+.info,
+.entry {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
     .App-logo {
         animation: App-logo-spin infinite 20s linear;

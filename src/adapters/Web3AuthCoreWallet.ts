@@ -28,7 +28,9 @@ export default class Web3AuthCoreWallet extends CWalletAdapter implements IWeb3W
                 this.walletInstance
                     .getUserInfo()
                     .then((userInfo) =>
-                        userInfo && this.setTorusEmail ? this.setTorusEmail(userInfo.email) : ''
+                        userInfo?.email && this.setTorusEmail
+                            ? this.setTorusEmail(userInfo.email)
+                            : ''
                     );
 
                 this.ethProvider = new EthereumProvider(this.walletInstance.provider);

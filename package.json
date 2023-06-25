@@ -1,8 +1,33 @@
 {
     "name": "web3-wallet-context",
-    "version": "1.0.1",
-    "main": "index.js",
-    "repository": "https://github.com/boxgames1/web3-wallet-context.git",
+    "version": "1.1.3",
+    "sideEffects": false,
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/esm/index.d.ts",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
+    },
+    "keywords": [
+        "react",
+        "typescript",
+        "web3",
+        "wallet-connect",
+        "wallet-context"
+    ],
+    "peerDependencies": {
+        "react": ">=16"
+    },
+    "files": [
+        "dist",
+        "LICENSE",
+        "README.md"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/boxgames1/web3-wallet-context.git"
+    },
     "author": "Oliver Alonso <alonso.oliverio@gmail.com>",
     "license": "MIT",
     "dependencies": {
@@ -16,29 +41,57 @@
         "@web3auth/wallet-connect-v1-adapter": "0.9.4",
         "@web3auth/web3auth": "0.9.4",
         "ethers": "^5.6.2",
-        "react": "^17.0.2",
-        "react-dom": "17.0.2",
+        "prettier": "^2.6.2",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "web3": "^1.7.3"
     },
     "devDependencies": {
+        "@babel/cli": "7.21.5",
+        "@babel/core": "7.22.1",
+        "@babel/eslint-parser": "7.21.8",
+        "@babel/node": "7.22.1",
+        "@babel/plugin-proposal-class-properties": "7.18.6",
+        "@babel/plugin-proposal-decorators": "7.22.3",
+        "@babel/plugin-proposal-export-default-from": "7.18.10",
+        "@babel/plugin-proposal-nullish-coalescing-operator": "7.18.6",
+        "@babel/plugin-proposal-object-rest-spread": "7.20.7",
+        "@babel/plugin-proposal-optional-chaining": "7.21.0",
+        "@babel/plugin-syntax-dynamic-import": "7.8.3",
+        "@babel/polyfill": "7.12.1",
+        "@babel/preset-env": "7.22.4",
+        "@babel/preset-react": "7.22.3",
+        "@babel/preset-typescript": "7.21.5",
         "@testing-library/jest-dom": "^5.16.3",
         "@testing-library/react": "^12.1.4",
         "@testing-library/user-event": "^14.0.1",
         "@types/jest": "^27.4.1",
         "@types/node": "^17.0.23",
-        "@types/react": "^17.0.43",
-        "@typescript-eslint/eslint-plugin": "^5.17.0",
-        "@typescript-eslint/parser": "^5.17.0",
+        "@types/react": "^18.2.0",
+        "@typescript-eslint/eslint-plugin": "^5.27.0",
+        "@typescript-eslint/parser": "^5.27.0",
         "autoprefixer": "^10.4.4",
-        "eslint": "^8.10.0",
+        "babel-core": "7.0.0-bridge.0",
+        "babel-jest": "29.0.2",
+        "babel-loader": "8.2.3",
+        "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
+        "eslint": "^8.17.0",
+        "eslint-plugin-react": "^7.30.0",
+        "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-config-google": "^0.14.0",
         "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-react": "^7.29.4",
+        "eslint-plugin-babel": "5.3.1",
+        "eslint-plugin-prettier": "^4.0.0",
         "jest": "^27.5.1",
-        "typescript": "^4.6.3"
+        "typescript": "^4.7.3"
     },
     "scripts": {
-        "build": "tsc --project tsconfig.json",
-        "publish": "npm run build && npm publish"
+        "build": "yarn build:esm && yarn build:cjs",
+        "build:esm": "tsc",
+        "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+        "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
+        "prettier": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm run prettier && npm run lint"
     }
 }

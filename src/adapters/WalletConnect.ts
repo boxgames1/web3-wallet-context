@@ -41,7 +41,7 @@ export default class WalletConnectWallet extends CWalletAdapter implements IWeb3
         });
     };
 
-    adapterInit = async (isMetamaskOnly: boolean = false) => {
+    adapterInit = async (isMetamaskOnly = false) => {
         try {
             const provider = new WalletConnectProvider({
                 bridge: 'https://bridge.walletconnect.org',

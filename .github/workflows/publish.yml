@@ -15,10 +15,6 @@ jobs:
         with:
           node-version: 18.x
           cache: "yarn"
-      - name: test
-        run: echo "$NPM_TOKEN"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: yarn
       - run: yarn prepare
       - name: npm login

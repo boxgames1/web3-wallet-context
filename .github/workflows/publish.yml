@@ -20,7 +20,7 @@ jobs:
       - run: yarn prepublishOnly
       - run: yarn prepare
       - name: NPM publish
-        run: npm run publish
+        run: npm publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

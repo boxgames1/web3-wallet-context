@@ -15,13 +15,10 @@ jobs:
         with:
           node-version: 18.x
           cache: "yarn"
+          registry-url: 'https://registry.npmjs.org'
       - run: yarn
       - run: yarn prepare
-      - name: npm login
-        run: echo "//https://registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish package on NPM 📦
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

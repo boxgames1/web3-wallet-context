@@ -14,11 +14,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: "npm"
+          cache: "yarn"
 
-      - run: npm install
-      - run: npm run prepublishOnly
-      - run: npm run prepare
+      - run: yarn
+      - run: yarn prepublishOnly
+      - run: yarn prepare
       - name: NPM publish
         run: npm run publish
         env:
